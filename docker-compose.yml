@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  detector:
+    build: .
+    container_name: android_cve_detector
+    # Değişikliklerin anında yansıması için src klasörünü bağla
+    volumes:
+      - ./src:/app/src
+    # .env dosyasından çevre değişkenlerini yükle
+    env_file:
+      - .env
+    # Konak makinedeki emülatöre (127.0.0.1) kolayca erişebilmek için host ağ modunu kullan
+    network_mode: "host"
+    restart: unless-stopped
