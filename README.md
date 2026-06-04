@@ -23,9 +23,8 @@
 ## 👤 Öğrenci Bilgisi
 | Ad Soyad | Baha Furkan Yıldız |
 | :--- | :--- |
-| **Öğrenci No** | 2025****4321 |
+| **Öğrenci No** | 2520**1009 |
 
-*(Not: Öğrenci numarasının orta rakamları hoca talimatı doğrultusunda maskelenmiştir. Lütfen kendi numaranıza göre son 4 haneyi el ile güncelleyiniz.)*
 
 ## 📚 Ders Bilgileri
 | Ders Adı | Sızma Testi |
