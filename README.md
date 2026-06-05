@@ -87,6 +87,7 @@ Android-rce-analizi/
 ├── .github/
 │   └── workflows/
 │       └── detector_test.yml  # GitHub Actions (CI/CD) Otomatik Test Yapılandırması
+├── .gitattributes             # GitHub dil istatistikleri ve dosya nitelikleri yapılandırması
 ├── README.md                  # Proje ana belgesi
 ├── ROADMAP.md                 # Proje yol haritası (Faz 0-5)
 ├── start_dashboard.bat        # Windows için Web Dashboard başlatıcı
@@ -98,7 +99,11 @@ Android-rce-analizi/
 ├── LICENSE                    # Lisans dosyası
 ├── src/                       # Kaynak kodlar
 │   ├── detector.py            # Uç nokta log analiz ajanı (Gerçek zamanlı tespit motoru)
+│   ├── exploit_sim.py         # Kırmızı Takım (Red Team) zafiyet istismar simülatörü
 │   └── test_detector.py       # Ajan için yazılmış otomatik birim (unit) testleri
+├── reports/                   # Simüle edilmiş tarama ve tespit raporları
+│   ├── nessus_scan.csv        # Simüle edilmiş Nessus zafiyet tarama çıktısı
+│   └── detection_results.json # Tespit motorunun anlık olarak kaydettiği log çıktıları
 ├── web/                       # Web Dashboard arayüzü
 │   ├── index.html             # Ana dashboard HTML dosyası
 │   ├── css/style.css          # Arayüz stilleri
