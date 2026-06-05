@@ -160,7 +160,7 @@ graph TD
 
 ---
 
-## ⚙️ Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 
 ### Ön Koşullar
 - Python 3.8+
