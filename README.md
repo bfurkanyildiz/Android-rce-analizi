@@ -150,18 +150,19 @@ graph TD
 
 ### Kurulum
 ```bash
-# 1. Repoyu klonlayın
+# 1. Repoyu klonlayın ve klasöre gidin
 git clone https://github.com/bfurkanyildiz/Android-rce-analizi.git
 cd Android-rce-analizi
 
-# 2. Ortam değişkenlerini ayarlayın
+# 2. Ortam değişkenlerini oluşturun (Ajanın keywords ve adb ayarları buradan beslenir)
 cp .env.example .env
 
-# 3. Docker ortamını başlatın
+# 3. Docker kullanarak ajanı çalıştırmak için (İsteğe bağlı - ADB ve Python konteyner içinde hazır gelir)
 docker-compose up -d
 
-# 4. Python bağımlılıklarını yükleyin (varsa)
-pip install -r requirements.txt
+# 4. Ajanı yerel olarak çalıştırmak veya test etmek için (Ek kütüphane bağımlılığı yoktur)
+python src/detector.py                 # Canlı log analiz ajanını başlatır
+python -m unittest src/test_detector.py # Otomatik birim testlerini çalıştırır
 ```
 
 ---
