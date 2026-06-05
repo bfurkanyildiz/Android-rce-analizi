@@ -1,0 +1,7 @@
+web/**/* linguist-documentation
+docs/**/* linguist-documentation
+*.bat linguist-documentation
+*.sh linguist-documentation
+*.json linguist-documentation
+*.csv linguist-documentation
+*.yml linguist-documentation

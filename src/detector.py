@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import json
 from datetime import datetime
 
 # ANSI renk kodları (Terminal çıktısını görselleştirmek ve premium kılmak için)
@@ -41,6 +42,35 @@ def print_header(keywords):
     print(f"{GREEN}[*] Izlenen Anahtar Kelimeler:{RESET} {', '.join(keywords)}")
     print(f"{GREEN}[*] Durum:{RESET} Log akisi dinleniyor...\n")
 
+def save_detection_to_json(keyword, log_line):
+    """Tespit edilen alarmi reports/detection_results.json dosyasina kaydeder."""
+    report_dir = "reports"
+    report_file = os.path.join(report_dir, "detection_results.json")
+    os.makedirs(report_dir, exist_ok=True)
+    
+    detection = {
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "keyword": keyword,
+        "log_line": log_line.strip()
+    }
+    
+    detections = []
+    if os.path.exists(report_file):
+        try:
+            with open(report_file, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+                if content:
+                    detections = json.loads(content)
+        except Exception:
+            pass
+            
+    detections.append(detection)
+    try:
+        with open(report_file, "w", encoding="utf-8") as f:
+            json.dump(detections, f, indent=4, ensure_ascii=False)
+    except Exception as e:
+        print(f"[!] Log yazma hatasi: {e}")
+
 def process_log_line(line, keywords):
     """Her log satirini analiz edip alarm durumlarini tespit eder."""
     if not line:
@@ -52,6 +82,7 @@ def process_log_line(line, keywords):
             timestamp = datetime.now().strftime("%H:%M:%S")
             print(f"{RED}{BOLD}[TEHLIKE - ALARM {timestamp}]{RESET} {kw} tespiti yapildi!")
             print(f"+-- Log Satiri: {YELLOW}{line.strip()}{RESET}\n")
+            save_detection_to_json(kw, line)
 
 def main():
     load_env()
