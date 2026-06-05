@@ -48,7 +48,7 @@ Geleneksel Android güvenlik analizleri genellikle sadece teorik dokümantasyon 
 * **Ürünleşmiş Güvenlik Çıktıları:** Tespit edilen alarmları SIEM standartlarına uygun olarak anlık JSON/CSV raporlarına dönüştürür ve merkezi gösterim paneline (Dashboard) besler.
 
 ### ⚡ Tek Komutla Çalışan PoC (Saldırı-Tespit Simülasyonu)
-Projeyi klonlayan bir kullanıcının saniyeler içinde çalışıp çıktıyı görebilmesi için tek komutla çalışan PoC başlatıcılar (`run_poc.bat` / `run_poc.sh`) eklenmiştir. Bu betikler, kırmızı takımın istismar adımlarını simüle eder ve mavi takım dedektörünün alarm üreterek `reports/detection_results.json` dosyasına yazmasını sağlar. Ayrıntılı çalıştırma adımları için [Kurulum ve Çalıştırma](#⚙️-kurulum-ve-çalıştırma) bölümüne bakabilirsiniz.
+Projeyi klonlayan bir kullanıcının saniyeler içinde çalışıp çıktıyı görebilmesi için tek komutla çalışan PoC başlatıcılar (`run_poc.bat` / `run_poc.sh`) eklenmiştir. Bu betikler, kırmızı takımın istismar adımlarını simüle eder ve mavi takım dedektörünün alarm üreterek `reports/detection_results.json` dosyasına yazmasını sağlar. Ayrıntılı çalıştırma adımları için [Kurulum ve Çalıştırma](#kurulum-ve-çalıştırma) bölümüne bakabilirsiniz.
 
 
 ### 📊 Analiz Edilen Zafiyetlerin Özet Tablosu
