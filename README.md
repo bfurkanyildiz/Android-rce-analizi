@@ -9,6 +9,7 @@
   ![Dil](https://img.shields.io/badge/Dil-Python-blue?style=flat-square)
   ![Durum](https://img.shields.io/badge/Durum-Tamamlandı-green?style=flat-square)
   ![Ders](https://img.shields.io/badge/Ders-BGT006-purple?style=flat-square)
+  ![CI/CD Test](https://github.com/bfurkanyildiz/Android-rce-analizi/actions/workflows/detector_test.yml/badge.svg)
 </div>
 
 ---
@@ -190,6 +191,12 @@ Python sunucusunu elle başlatmak isterseniz:
 python -m http.server 8080
 ```
 Ardından tarayıcınızdan `http://localhost:8080/web/index.html` adresine gidin.
+
+### 🔄 CI/CD Otomatik Test Süreci
+
+Proje, yazılım kalitesi ve sürekli entegrasyon (CI/CD) standartlarına uygun olarak tasarlanmıştır. GitHub Actions entegrasyonu sayesinde repoya yapılan her push ve pull request işleminde:
+* Kod tabanı otomatik olarak taranır ve sanal ortam kurulur.
+* `src/test_detector.py` birimi çalıştırılarak `detector.py` alarm korelasyon motorunun doğruluğu test edilir.
 
 
 ---
