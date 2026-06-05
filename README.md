@@ -18,12 +18,13 @@
 | :--- | :--- |
 | **GitHub** | [@keyvanarasteh](https://github.com/keyvanarasteh) |
 | **E-posta** | keyvan.arasteh@istinye.edu.tr |
+| **LinkedIn** | [keyvanarasteh](https://linkedin.com/in/keyvanarasteh) |
 | **Web Sitesi** | [qline.tech](https://qline.tech) |
 
 ## 👤 Öğrenci Bilgisi
 | Ad Soyad | Baha Furkan Yıldız |
 | :--- | :--- |
-| **Öğrenci No** | 25****1009 |
+| **Öğrenci No** | 2520****1009 |
 
 
 ## 📚 Ders Bilgileri
