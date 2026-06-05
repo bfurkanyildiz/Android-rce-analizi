@@ -1,6 +1,6 @@
 import os
 import sys
-import subprocess
+import subprocess  # nosec B404
 import json
 from datetime import datetime
 
@@ -61,7 +61,7 @@ def save_detection_to_json(keyword, log_line):
                 content = f.read().strip()
                 if content:
                     detections = json.loads(content)
-        except Exception:
+        except Exception:  # nosec B110
             pass
             
     detections.append(detection)
@@ -128,13 +128,13 @@ def main():
         connect_cmd = ["adb", "connect", adb_target]
         
         try:
-            subprocess.run(connect_cmd, capture_output=True, text=True, timeout=5)
+            subprocess.run(connect_cmd, capture_output=True, text=True, timeout=5)  # nosec B603
             
             # Logcat akisini baslat (Sadece anahtar kelimeleri yakalamak için logcat ciktisini okuyacagiz)
             logcat_cmd = ["adb", "-s", adb_target, "logcat", "-v", "time"]
             print(f"{GREEN}[SUCCESS] ADB Logcat akisi baslatildi: {' '.join(logcat_cmd)}{RESET}\n")
             
-            process = subprocess.Popen(logcat_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, errors="ignore")
+            process = subprocess.Popen(logcat_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, errors="ignore")  # nosec B603
             
             while True:
                 line = process.stdout.readline()

@@ -48,5 +48,10 @@
         "timestamp": "2026-06-05 21:05:00",
         "keyword": "SIGABRT",
         "log_line": "06-05 20:30:15.250  1000  1000 W libc    : SIGABRT: package installer system crashed during UID mapping check"
+    },
+    {
+        "timestamp": "2026-06-05 21:11:02",
+        "keyword": "SIGSEGV",
+        "log_line": "W AndroidRuntime: SIGSEGV in run-as process"
     }
 ]
