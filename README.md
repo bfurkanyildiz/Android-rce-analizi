@@ -41,3 +41,77 @@ Bu proje, İstinye Üniversitesi Bilgi Güvenliği Teknolojisi programı Sızma 
 
 ### 🔌 Vize Modülü (NetVanguard) Entegrasyonu
 Proje kapsamında geliştirilen `src/detector.py` uç nokta log analiz ajanı, vize projesi olarak hayata geçirilen **NetVanguard** merkezi anomali izleme ve alarm paneline entegre edilmiştir. Emülatör üzerinde oluşan kritik zafiyet imzaları ağ üzerinden NetVanguard backend motoruna aktarılarak merkezi izleme (SIEM) mimarisi simüle edilmiştir.
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+| Teknoloji | Kullanım Amacı |
+| :--- | :--- |
+| **Python 3.x** | Tespit motoru, saldırı simülasyonu |
+| **Android SDK / ADB** | Emülatör yönetimi, cihaz iletişimi |
+| **Docker** | İzole lab ortamı konteynerizasyonu |
+| **Flask** | Web izleme paneli |
+| **Logcat** | Android sistem log analizi |
+
+---
+
+## 📂 Proje Dizin Yapısı
+
+```
+Android-rce-analizi/
+├── README.md                  # Proje ana belgesi
+├── ROADMAP.md                 # Proje yol haritası (Faz 0-5)
+├── .gitignore                 # Git takip dışı dosyalar
+├── .env.example               # Ortam değişkenleri şablonu
+├── Dockerfile                 # Docker yapılandırması
+├── docker-compose.yml         # Çoklu konteyner yapılandırması
+├── LICENSE                    # Lisans dosyası
+├── src/                       # Kaynak kodlar
+│   └── detector.py            # Uç nokta log analiz ajanı
+├── docs/                      # Dokümantasyon
+│   ├── assets/                # Görseller ve medya dosyaları
+│   ├── modules/               # Modül belgeleri
+│   ├── references/            # Referans kaynakları
+│   └── research/              # Araştırma belgeleri
+├── honeypot/                  # Honeypot ortam dosyaları
+└── archive/                   # Arşivlenmiş / kullanım dışı dosyalar
+```
+
+---
+
+## ⚙️ Kurulum ve Çalıştırma
+
+### Ön Koşullar
+- Python 3.8+
+- Android SDK (API Level 33-34)
+- Docker & Docker Compose
+- ADB (Android Debug Bridge)
+
+### Kurulum
+```bash
+# 1. Repoyu klonlayın
+git clone https://github.com/<kullanici>/Android-rce-analizi.git
+cd Android-rce-analizi
+
+# 2. Ortam değişkenlerini ayarlayın
+cp .env.example .env
+
+# 3. Docker ortamını başlatın
+docker-compose up -d
+
+# 4. Python bağımlılıklarını yükleyin (varsa)
+pip install -r requirements.txt
+```
+
+---
+
+## ⚠️ Yasal Uyarı
+
+Bu proje **yalnızca akademik ve eğitim amaçlıdır**. Tüm testler kontrollü laboratuvar ortamında, izole edilmiş sanal makineler üzerinde gerçekleştirilmektedir. Gerçek cihazlara veya üçüncü taraf sistemlere yönelik herhangi bir saldırı girişimi **yasa dışıdır** ve bu projenin kapsamı dışındadır.
+
+---
+
+## 📄 Lisans
+
+Bu proje [GNU General Public License v3.0](LICENSE) ile lisanslanmıştır.
