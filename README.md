@@ -110,11 +110,17 @@ Android-rce-analizi/
 ├── ROADMAP.md                 # Proje yol haritası (Faz 0-5)
 ├── start_dashboard.bat        # Windows için Web Dashboard başlatıcı
 ├── start_dashboard.sh         # macOS/Linux için Web Dashboard başlatıcı
+├── run_poc.bat                # Windows için tek tıkla çalışan PoC simülatörü
+├── run_poc.sh                 # macOS/Linux için tek tıkla çalışan PoC simülatörü
 ├── .gitignore                 # Git takip dışı dosyalar
 ├── .env.example               # Ortam değişkenleri şablonu
 ├── Dockerfile                 # Docker yapılandırması
 ├── docker-compose.yml         # Çoklu konteyner yapılandırması
 ├── LICENSE                    # Lisans dosyası
+├── mitigation/                # Zafiyet azaltma ve düzeltme (patch) dosyaları
+│   ├── cve_2024_0044_patch.diff
+│   ├── cve_2024_23706_mitigation.md
+│   └── cve_2024_43093_mitigation.md
 ├── src/                       # Kaynak kodlar
 │   ├── detector.py            # Uç nokta log analiz ajanı (Gerçek zamanlı tespit motoru)
 │   ├── exploit_sim.py         # Kırmızı Takım (Red Team) zafiyet istismar simülatörü
@@ -127,7 +133,7 @@ Android-rce-analizi/
 │   ├── css/style.css          # Arayüz stilleri
 │   └── js/main.js             # Arayüz dinamikleri ve terminal simülatörü
 ├── docs/                      # Dokümantasyon
-│   ├── assets/                # Görseller ve medya dosyaları
+│   ├── assets/                # Görseller ve medya dosyaları (Demo GIF dahil)
 │   ├── modules/               # Modül belgeleri
 │   ├── references/            # Referans kaynakları
 │   └── research/              # Derinlemesine araştırma belgeleri
@@ -169,8 +175,6 @@ graph TD
 - Android SDK (API Level 33-34)
 - Docker & Docker Compose
 - ADB (Android Debug Bridge)
-
-### Kurulum ve Çalıştırma
 
 #### 1. Adım: Hazırlık
 ```bash
