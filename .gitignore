@@ -1,0 +1,9 @@
+# Ortam değişkenleri
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Node.js
+node_modules/

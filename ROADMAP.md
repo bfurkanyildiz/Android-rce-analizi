@@ -10,20 +10,45 @@
 
 Bu yol haritası, Android `run-as` komutundaki **CVE-2024-0044** ayrıcalık yükseltme zafiyetinin araştırılması, kontrollü bir ortamda simüle edilmesi ve bu saldırıyı gerçek zamanlı tespit edebilen bir **Honeypot + IDS (Saldırı Tespit Sistemi)** altyapısının geliştirilmesine yönelik tüm aşamaları kapsamaktadır.
 
-Proje dört ana fazdan oluşmaktadır:
+Proje altı ana fazdan oluşmaktadır:
 
 | Faz | Başlık | Dizin | Durum |
 |:---:|--------|-------|:-----:|
-| 1 | Araştırma ve Analiz | `research/` | 🔶 |
-| 2 | Honeypot Hazırlığı | `honeypot/` | 🔶 |
-| 3 | Tespit ve Simülasyon | `codebase/` | 🔲 |
-| 4 | Test ve Doğrulama | — | 🔲 |
+| 0 | Yazmadan Önce Anla | — | ✅ |
+| 1 | Araştırma ve Keşif | `research/` | 🔶 |
+| 2 | Ortam Kurulumu | `honeypot/` | 🔶 |
+| 3 | Uygulama | `codebase/` | 🔲 |
+| 4 | Test ve Raporlama | `docs/` | 🔲 |
+| 5 | Teslim Kontrol Listesi | — | 🔲 |
 
 > **Durum Göstergeleri:** 🔲 Başlanmadı · 🔶 Devam Ediyor · ✅ Tamamlandı
 
 ---
 
-## Faz 1: Araştırma ve Analiz (`research/`)
+## Faz 0: Yazmadan Önce Anla
+
+> **Amaç:** Projeye başlamadan önce zafiyetin bağlamını, saldırı yüzeyini ve projenin akademik çerçevesini kavramak.
+
+### 0.1 — Ön Araştırma ve Bağlam Oluşturma
+- [x] CVE-2024-0044 zafiyetinin ne olduğunu ve neden önemli olduğunu anlama.
+- [x] Android `run-as` komutunun normal çalışma amacını ve mimarideki yerini kavrama.
+- [x] Zafiyetin etkilediği Android sürümlerini ve cihaz kapsamını belirleme.
+- [x] Sızma testi metodolojisinin (keşif → analiz → sömürü → raporlama) proje akışına nasıl uygulanacağını planlama.
+
+### 0.2 — Proje Kapsamının Belirlenmesi
+- [x] Final projesi gereksinimlerinin (3 CVE analizi, lab ortamı, raporlama) listelenmesi.
+- [x] Projenin sınırlarının çizilmesi: neler yapılacak, neler kapsam dışı.
+- [x] Teslim formatı ve beklentilerin netleştirilmesi.
+
+### 📦 Faz 0 Çıktıları
+| Çıktı | Dosya | Durum |
+|-------|-------|:-----:|
+| Proje yol haritası | `ROADMAP.md` | ✅ |
+| Proje ana belgesi | `README.md` | ✅ |
+
+---
+
+## Faz 1: Araştırma ve Keşif (`research/`)
 
 > **Amaç:** Zafiyetin teknik altyapısını kavramak, saldırı yüzeyini belirlemek ve tüm bulguları yapılandırılmış bir şekilde dokümante etmek.
 
@@ -54,7 +79,7 @@ Proje dört ana fazdan oluşmaktadır:
 
 ---
 
-## Faz 2: Honeypot Hazırlığı (`honeypot/`)
+## Faz 2: Ortam Kurulumu (`honeypot/`)
 
 > **Amaç:** Zafiyetli bir Android ortamını kontrollü biçimde ayağa kaldırmak ve saldırı tespiti için gerekli izleme altyapısını kurmak.
 
@@ -84,7 +109,7 @@ Proje dört ana fazdan oluşmaktadır:
 
 ---
 
-## Faz 3: Tespit ve Simülasyon (`codebase/`)
+## Faz 3: Uygulama (`codebase/`)
 
 > **Amaç:** Saldırı simülasyonu, gerçek zamanlı tespit motoru ve canlı izleme panelini geliştirmek.
 
@@ -120,7 +145,7 @@ Proje dört ana fazdan oluşmaktadır:
 
 ---
 
-## Faz 4: Test ve Doğrulama
+## Faz 4: Test ve Raporlama
 
 > **Amaç:** Tüm bileşenlerin uçtan uca çalıştığını doğrulamak ve proje teslim kalitesini sağlamak.
 
@@ -148,6 +173,35 @@ Proje dört ana fazdan oluşmaktadır:
 | Test sonuç raporu | `docs/test-raporu.md` |
 | Ekran görüntüleri | `docs/screenshots/` |
 | Final raporu | `docs/final-rapor.md` |
+
+---
+
+## Faz 5: Teslim Kontrol Listesi
+
+> **Amaç:** Projenin teslim öncesi son kontrollerini yapmak ve eksiksiz bir şekilde sunuma hazır hale getirmek.
+
+### 5.1 — Kod ve Dosya Kontrolü
+- [ ] Tüm kaynak dosyaların açıklayıcı yorum satırları içerdiğinin doğrulanması.
+- [ ] `.gitignore` dosyasının güncel ve eksiksiz olduğunun teyidi.
+- [ ] Gereksiz dosyaların (log, cache, geçici dosyalar) repodan temizlenmesi.
+- [ ] `requirements.txt` veya bağımlılık dosyalarının güncelliğinin kontrol edilmesi.
+
+### 5.2 — Dokümantasyon Kontrolü
+- [ ] `README.md` dosyasının güncel öğrenci bilgileri, proje özeti ve kurulum rehberini içerdiğinin doğrulanması.
+- [ ] `ROADMAP.md` faz yapısının eksiksiz olduğunun teyidi.
+- [ ] Tüm araştırma belgelerinin (`research/`) tamamlanmış olduğunun kontrol edilmesi.
+- [ ] Ekran görüntülerinin ve test kanıtlarının `docs/` dizininde mevcut olduğunun doğrulanması.
+
+### 5.3 — Final Teslim
+- [ ] GitHub reposunun son commit'inin temiz ve açıklayıcı mesajla yapılması.
+- [ ] Projenin klonlanarak sıfırdan çalıştırılabilirliğinin test edilmesi.
+- [ ] Final raporunun PDF veya Markdown formatında hazır olduğunun teyidi.
+
+### 📦 Faz 5 Çıktıları
+| Çıktı | Dosya | Durum |
+|-------|-------|:-----:|
+| Teslim kontrol listesi | `ROADMAP.md` (bu bölüm) | 🔲 |
+| Temiz GitHub reposu | — | 🔲 |
 
 ---
 
