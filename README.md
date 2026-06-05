@@ -91,7 +91,7 @@ Android-rce-analizi/
 ### Kurulum
 ```bash
 # 1. Repoyu klonlayın
-git clone https://github.com/<kullanici>/Android-rce-analizi.git
+git clone https://github.com/bfurkanyildiz/Android-rce-analizi.git
 cd Android-rce-analizi
 
 # 2. Ortam değişkenlerini ayarlayın
