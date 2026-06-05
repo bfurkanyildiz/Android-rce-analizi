@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android CVE Analizi — Siber Güvenlik Dashboard</title>
+    <meta name="description" content="Android ekosistemindeki kritik CVE zafiyetlerinin analizi, saldırı zinciri simülasyonu ve tespit sistemi. İstinye Üniversitesi BGT006 Sızma Testi Final Projesi.">
+    <meta name="author" content="Baha Furkan Yıldız">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ====== NAVIGATION ====== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#hero" class="nav-brand">
+                <span class="shield-icon">🛡️</span>
+                <span>Android CVE Lab</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#overview">Genel Bakış</a></li>
+                <li><a href="#cve-analysis">CVE Analizi</a></li>
+                <li><a href="#attack-chain">Saldırı Zinciri</a></li>
+                <li><a href="#technical">Teknik Detay</a></li>
+                <li><a href="#detector">Detector</a></li>
+                <li><a href="#risk-matrix">Risk Matrisi</a></li>
+                <li><a href="#lab">Lab Ortamı</a></li>
+            </ul>
+            <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Menüyü aç">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ====== HERO ====== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-grid"></div>
+            <div class="hero-orb hero-orb--1"></div>
+            <div class="hero-orb hero-orb--2"></div>
+            <div class="hero-orb hero-orb--3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                BGT006 — Sızma Testi Final Projesi
+            </div>
+            <h1>
+                <span class="gradient-text">Android CVE Araştırma</span><br>
+                ve PoC Laboratuvarı
+            </h1>
+            <p class="hero-subtitle">
+                Android ekosistemini etkileyen 3 kritik zafiyetin derinlemesine analizi,
+                saldırı zinciri simülasyonu ve gerçek zamanlı tespit sistemi geliştirme.
+            </p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <span class="icon">🎓</span>
+                    <span>İstinye Üniversitesi</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="icon">👤</span>
+                    <span>Baha Furkan Yıldız</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="icon">👨‍🏫</span>
+                    <span>Keyvan Arasteh</span>
+                </div>
+                <div class="hero-meta-item">
+                    <span class="icon">📅</span>
+                    <span>2025–2026 Bahar</span>
+                </div>
+            </div>
+            <div class="hero-scroll-indicator">
+                <span>Aşağı kaydır</span>
+                <span class="arrow">↓</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== OVERVIEW / STATS ====== -->
+    <section class="section" id="overview">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-tag">Proje Özeti</span>
+                <h2 class="section-title">Genel Bakış</h2>
+                <p class="section-desc">
+                    Android işletim sisteminin çekirdek bileşenlerini etkileyen 3 kritik zafiyet incelenmiş, izole lab ortamında analiz edilmiştir.
+                </p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card stat-card--cve fade-in fade-in-delay-1">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">CVE Analiz Edildi</div>
+                </div>
+                <div class="stat-card stat-card--critical fade-in fade-in-delay-2">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Kritik Seviye</div>
+                </div>
+                <div class="stat-card stat-card--high fade-in fade-in-delay-3">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Yüksek Seviye</div>
+                </div>
+                <div class="stat-card stat-card--detector fade-in fade-in-delay-4">
+                    <div class="stat-number">3/3</div>
+                    <div class="stat-label">Detector Tespit</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CVE CARDS ====== -->
+    <section class="section" id="cve-analysis">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-tag">Zafiyet Analizi</span>
+                <h2 class="section-title">İncelenen CVE'ler</h2>
+                <p class="section-desc">
+                    Android ekosistemini etkileyen 3 farklı güncel zafiyet derinlemesine incelenmiştir.
+                </p>
+            </div>
+            <div class="cve-cards-grid">
+
+                <!-- CVE-2024-0044 -->
+                <div class="cve-card cve-card--critical fade-in fade-in-delay-1">
+                    <div class="cve-card-header">
+                        <div>
+                            <div class="cve-id">CVE-2024-0044</div>
+                            <h3>run-as Yerel Yetki Yükseltme</h3>
+                        </div>
+                        <span class="severity-badge severity-badge--critical">Kritik</span>
+                    </div>
+                    <p class="cve-card-desc">
+                        <code>/data/system/packages.list</code> dosyasına paket kurulumu sırasında satır sonu (<code>\n</code>) karakteri enjekte edilerek
+                        dosya yapısının bozulması ve <code>run-as</code> aracının kandırılarak hedef uygulamanın UID'si ile komut çalıştırılabilmesi.
+                        Saldırgan, bankacılık ve mesajlaşma uygulamalarının oturum tokenlerini, veritabanlarını ve hassas dosyalarını ele geçirebilir.
+                    </p>
+                    <div class="cve-meta">
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">CVSS Skoru</span>
+                            <span class="cvss-score cvss-score--critical">7.8</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Etkilenen Sürümler</span>
+                            <span class="cve-meta-value">Android 12 – 14</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Bileşen</span>
+                            <span class="cve-meta-value">Package Manager / run-as</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Yama</span>
+                            <span class="cve-meta-value">Ekim 2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CVE-2024-43093 -->
+                <div class="cve-card cve-card--high fade-in fade-in-delay-2">
+                    <div class="cve-card-header">
+                        <div>
+                            <div class="cve-id">CVE-2024-43093</div>
+                            <h3>DocumentsUI Mantıksal Dosya Erişim İhlali</h3>
+                        </div>
+                        <span class="severity-badge severity-badge--high">Yüksek</span>
+                    </div>
+                    <p class="cve-card-desc">
+                        <code>ExternalStorageProvider.java</code> içindeki <code>shouldHideDocument()</code> metodundaki
+                        <strong>Unicode Normalizasyon Hatası</strong> nedeniyle, yasaklı dosya yollarının alternatif karakterlerle
+                        filtreden kaçırılması ve sandbox dışındaki <code>Android/data</code> altındaki hassas kullanıcı verilerine erişilmesi.
+                        CISA tarafından aktif hedefli casus yazılım kampanyalarında kullanıldığı doğrulanmıştır.
+                    </p>
+                    <div class="cve-meta">
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">CVSS Skoru</span>
+                            <span class="cvss-score cvss-score--high">7.5</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Etkilenen Sürümler</span>
+                            <span class="cve-meta-value">Android 12 – 15</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Bileşen</span>
+                            <span class="cve-meta-value">Storage Access Framework</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Yama</span>
+                            <span class="cve-meta-value">Kasım 2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CVE-2024-23706 -->
+                <div class="cve-card cve-card--high fade-in fade-in-delay-3">
+                    <div class="cve-card-header">
+                        <div>
+                            <div class="cve-id">CVE-2024-23706</div>
+                            <h3>PermissionController İzin Atlatma</h3>
+                        </div>
+                        <span class="severity-badge severity-badge--high">Yüksek</span>
+                    </div>
+                    <p class="cve-card-desc">
+                        Android HealthFitness IPC bağlantı yollarındaki <strong>yetersiz girdi doğrulaması</strong> sonucu,
+                        yerel bir uygulamanın kullanıcı onayı (izin pencereleri) olmaksızın kritik izinleri atlatabilmesi.
+                        Saldırgan arka planda sessizce sağlık, fitness, biyometrik veriler ve kişisel aktivite kayıtlarına erişim kazanır.
+                    </p>
+                    <div class="cve-meta">
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">CVSS Skoru</span>
+                            <span class="cvss-score cvss-score--high">7.5</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Etkilenen Sürümler</span>
+                            <span class="cve-meta-value">Android 14</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Bileşen</span>
+                            <span class="cve-meta-value">HealthFitness / Permission</span>
+                        </div>
+                        <div class="cve-meta-row">
+                            <span class="cve-meta-label">Yama</span>
+                            <span class="cve-meta-value">Mayıs 2024</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== ATTACK CHAIN ====== -->
+    <section class="section" id="attack-chain">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-tag">Saldırgan Perspektifi</span>
+                <h2 class="section-title">Çoklu Zafiyet Saldırı Zinciri</h2>
+                <p class="section-desc">
+                    3 zafiyetin birleştirilerek cihaz üzerinde tam kontrol elde edilme senaryosu.
+                    Her zafiyet bir sonraki aşamanın anahtarıdır.
+                </p>
+            </div>
+            <div class="attack-chain">
+                <div class="chain-step chain-step--1 fade-in fade-in-delay-1">
+                    <div class="chain-step-number">1</div>
+                    <h4>İzin Atlatma</h4>
+                    <div class="chain-step-cve">CVE-2024-23706</div>
+                    <p>Zararlı uygulama, HealthFitness IPC açığıyla kullanıcıya onay penceresi göstermeden izin denetleyicisini atlatır. Cihazda sessizce altyapı oluşturulur.</p>
+                </div>
+                <div class="chain-arrow fade-in">→</div>
+                <div class="chain-step chain-step--2 fade-in fade-in-delay-2">
+                    <div class="chain-step-number">2</div>
+                    <h4>Sandbox Bypass</h4>
+                    <div class="chain-step-cve">CVE-2024-43093</div>
+                    <p>Unicode normalizasyon açığıyla <code>Android/data</code> dizinindeki korumalı klasörlere erişim hakkı kazanılır. Dosya sistemine yazma yetkisi elde edilir.</p>
+                </div>
+                <div class="chain-arrow fade-in">→</div>
+                <div class="chain-step chain-step--3 fade-in fade-in-delay-3">
+                    <div class="chain-step-number">3</div>
+                    <h4>Yetki Yükseltme</h4>
+                    <div class="chain-step-cve">CVE-2024-0044</div>
+                    <p><code>packages.list</code> dosyası satır enjeksiyonuyla zehirlenir. <code>run-as</code> komutuyla hedef uygulamanın UID'sine geçilerek tam kontrol sağlanır.</p>
+                </div>
+                <div class="chain-arrow fade-in">→</div>
+                <div class="chain-step chain-step--result fade-in fade-in-delay-4">
+                    <div class="chain-step-number">💀</div>
+                    <h4>Tam Kontrol</h4>
+                    <div class="chain-step-cve">Nihai Hedef</div>
+                    <p>Hedef uygulamanın tüm özel verileri (tokenler, veritabanları, dosyalar) ele geçirilir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== TECHNICAL DEEP DIVE ====== -->
+    <section class="section" id="technical">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-tag">Teknik Analiz</span>
+                <h2 class="section-title">Derinlemesine Teknik İnceleme</h2>
+                <p class="section-desc">
+                    Zafiyetlerin iç mekanizmalarını, saldırı adımlarını ve tespit yöntemlerini keşfedin.
+                </p>
+            </div>
+
+            <div class="accordion-list">
+
+                <!-- Accordion 1: UID & Sandbox -->
+                <div class="accordion-item fade-in" id="acc-uid">
+                    <button class="accordion-trigger" aria-expanded="false">
+                        <span class="icon-left">🔐</span>
+                        <span class="trigger-text">UID ve Sandbox Mekanizması Nedir?</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Android, her uygulamaya kurulum sırasında benzersiz bir <strong>UID</strong> (User ID) atar. Bu numara Linux çekirdeği düzeyinde uygulamanın kimliğini belirler. Örneğin bir mesajlaşma uygulaması <code>u0_a150</code> (UID 10150) alırken, bir bankacılık uygulaması <code>u0_a203</code> (UID 10203) alabilir.</p>
+                            <p><strong>Sandbox</strong> (kum havuzu), bu UID sayesinde işler: her uygulama yalnızca kendi UID'siyle etiketlenmiş dosya ve süreçlere erişebilir. Uygulama A, uygulama B'nin <code>/data/data/</code> dizinine giremez.</p>
+                            <div class="info-box">
+                                💡 <strong>Analoji:</strong> UID'yi bir öğrenci numarası, sandbox'ı ise o öğrenciye ait kilitli dolap olarak düşünebilirsiniz. Her öğrenci yalnızca kendi dolabını açabilir.
+                            </div>
+                            <ul>
+                                <li><strong>UID →</strong> "Sen kimsin?" sorusunun cevabı</li>
+                                <li><strong>Sandbox →</strong> "Nereye erişebilirsin?" sorusunun cevabı</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 2: run-as -->
+                <div class="accordion-item fade-in" id="acc-runas">
+                    <button class="accordion-trigger" aria-expanded="false">
+                        <span class="icon-left">⚙️</span>
+                        <span class="trigger-text">run-as Aracı Nasıl Çalışır?</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p><code>run-as</code>, Android'de yerleşik bir komut satırı aracıdır. Geliştiricilerin ADB üzerinden kendi uygulamalarının özel verilerine erişmesini sağlar.</p>
+                            <h4>Normal Çalışma Adımları</h4>
+                            <ol>
+                                <li>Geliştirici <code>run-as com.ornek.uygulama</code> komutunu çalıştırır.</li>
+                                <li><code>/data/system/packages.list</code> dosyasından paketin kayıtlı olup olmadığı, UID'si ve debuggable bayrağı kontrol edilir.</li>
+                                <li>Paket debuggable ise, <code>setuid()</code> sistem çağrısıyla o uygulamanın UID'sine geçiş yapılır.</li>
+                                <li>Geliştirici, uygulamanın sandbox'ı içinde komut çalıştırabilir.</li>
+                            </ol>
+                            <div class="code-block">
+<span class="code-comment"># ADB üzerinden cihaza bağlan</span>
+$ adb shell
+
+<span class="code-comment"># run-as ile uygulamanın sandbox'ına gir</span>
+shell@device:/ $ <span class="code-keyword">run-as</span> com.ornek.notlar
+
+<span class="code-comment"># Artık uygulamanın özel dizinindesiniz</span>
+<span class="code-string">u0_a150</span>@device:/data/data/com.ornek.notlar $ ls
+cache/  databases/  shared_prefs/
+                            </div>
+                            <div class="warning-box">
+                                ⚠️ <strong>Kritik nokta:</strong> <code>run-as</code> yalnızca debuggable bayrağı <code>1</code> olan uygulamalarda çalışır. Üretim uygulamalarında bu bayrak <code>0</code>'dır.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 3: packages.list -->
+                <div class="accordion-item fade-in" id="acc-packages">
+                    <button class="accordion-trigger" aria-expanded="false">
+                        <span class="icon-left">📄</span>
+                        <span class="trigger-text">packages.list Dosya Formatı ve Zehirlenmesi</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p><code>run-as</code>'ın kararlarını verdiği kaynak, <code>/data/system/packages.list</code> düz metin dosyasıdır. Her satırda bir paket bilgisi bulunur:</p>
+                            <div class="code-block">
+com.ornek.notlar 10150 <span class="code-string">1</span> /data/data/com.ornek.notlar default:targetSdkVersion=33
+com.banka.app 10203 <span class="code-danger">0</span> /data/data/com.banka.app default:targetSdkVersion=34
+com.sosyal.medya 10178 <span class="code-danger">0</span> /data/data/com.sosyal.medya default:targetSdkVersion=33
+                            </div>
+                            <h4>Alan Açıklamaları</h4>
+                            <ul>
+                                <li><strong>Paket adı:</strong> Uygulamanın benzersiz kimliği</li>
+                                <li><strong>UID:</strong> Linux kullanıcı numarası (ör: 10150)</li>
+                                <li><strong>Debuggable:</strong> Hata ayıklama bayrağı (1=açık, 0=kapalı)</li>
+                                <li><strong>Veri dizini:</strong> Uygulamanın özel klasörü</li>
+                                <li><strong>SELinux etiketi:</strong> Güvenlik bağlamı</li>
+                            </ul>
+                            <div class="warning-box">
+                                ⚠️ <code>run-as</code> bu dosyayı <strong>yukarıdan aşağıya</strong> okur ve eşleşen <strong>ilk satırı</strong> kullanır. Bu davranış zafiyetin temelini oluşturur!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 4: Saldırı Adımları -->
+                <div class="accordion-item fade-in" id="acc-attack">
+                    <button class="accordion-trigger" aria-expanded="false">
+                        <span class="icon-left">💣</span>
+                        <span class="trigger-text">CVE-2024-0044 Saldırı Adımları (Adım Adım)</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <h4>Adım 1: Zararlı Paket Adının Hazırlanması</h4>
+                            <p>Saldırgan, paket adına satır sonu karakterleri (<code>\n</code>) ve sahte bir <code>packages.list</code> satırı enjekte eder. Hedef uygulamanın debuggable bayrağı <code>0</code> yerine <code>1</code> yapılır.</p>
+
+                            <h4>Adım 2: Zararlı APK'nın Yüklenmesi</h4>
+                            <div class="code-block">
+$ adb install zararlı.apk
+<span class="code-string">Success</span>
+                            </div>
+                            <p>Android'in paket yükleyicisi (<code>installd</code>), paket adını doğrulamadan <code>packages.list</code>'e yazar.</p>
+
+                            <h4>Adım 3: packages.list Dosyasının Zehirlenmesi</h4>
+                            <div class="code-block">
+...
+zararlı-paket                          <span class="code-comment">← saldırganın gerçek paketi (kırık satır)</span>
+<span class="code-danger">com.banka.app 10203 1 /data/data/com.banka.app</span>   <span class="code-comment">← SAHTE (debuggable=1)</span>
+...
+com.banka.app 10203 <span class="code-string">0</span> /data/data/com.banka.app   <span class="code-comment">← GERÇEK (debuggable=0)</span>
+                            </div>
+
+                            <h4>Adım 4: run-as Komutunun Kandırılması</h4>
+                            <p><code>run-as</code> dosyayı yukarıdan aşağıya okur. Sahte satır ilk sırada olduğundan, <code>debuggable=1</code> kabul eder ve saldırganı hedef uygulamanın UID'sine geçirir.</p>
+
+                            <h4>Adım 5: Veriler Ele Geçirilir</h4>
+                            <div class="code-block">
+<span class="code-string">u0_a203</span>@device:/data/data/com.banka.app $ cat shared_prefs/auth_prefs.xml
+&lt;map&gt;
+    &lt;string name="session_token"&gt;<span class="code-danger">eyJhbGciOiJIUzI1NiIs...</span>&lt;/string&gt;
+    &lt;string name="refresh_token"&gt;<span class="code-danger">dGhpcyBpcyBhIHRlc3Q...</span>&lt;/string&gt;
+&lt;/map&gt;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 5: Unicode Bypass -->
+                <div class="accordion-item fade-in" id="acc-unicode">
+                    <button class="accordion-trigger" aria-expanded="false">
+                        <span class="icon-left">🔤</span>
+                        <span class="trigger-text">CVE-2024-43093 — Unicode Normalizasyon Bypass Mekanizması</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p><code>ExternalStorageProvider.java</code> dosyasındaki <code>shouldHideDocument()</code> metodu, <code>Android/data</code>, <code>Android/obb</code> ve <code>Android/sandbox</code> yollarını uygulamalardan gizler.</p>
+                            <h4>Bypass Yöntemi</h4>
+                            <p>Girdi doğrulama filtresi, Unicode karakterlerin standart olmayan (fullwidth/tam genişlikli) karşılıklarını tanımaz. Saldırgan, korumalı dizin adını alternatif Unicode kod noktalarıyla biçimlendirir.</p>
+                            <ul>
+                                <li><strong>Filtre:</strong> Yolu "zararsız" kabul ederek erişim izni verir.</li>
+                                <li><strong>Dosya sistemi:</strong> Alternatif karakterleri gerçek <code>Android/data</code> dizinine çözümler.</li>
+                                <li><strong>Sonuç:</strong> Mantıksal bypass gerçekleşir.</li>
+                            </ul>
+                            <h4>Düzeltme (Patch) Mantığı</h4>
+                            <div class="code-block">
+<span class="code-comment">// Eklenen zorunlu normalizasyon adımı</span>
+<span class="code-keyword">Normalizer.normalize</span>(path, <span class="code-string">Normalizer.Form.NFKC</span>);
+
+<span class="code-comment">// Artık fullwidth karakterler filtrelenmeden önce</span>
+<span class="code-comment">// orijinal ASCII formatına dönüştürülür</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 6: Permission Bypass -->
+                <div class="accordion-item fade-in" id="acc-permission">
+                    <button class="accordion-trigger" aria-expanded="false">
+                        <span class="icon-left">🔓</span>
+                        <span class="trigger-text">CVE-2024-23706 — İzin Denetleyici Atlatma Detayları</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>HealthFitness API servislerine yapılan çağrılarda uygulanan <strong>yetersiz girdi doğrulaması</strong> nedeniyle izin atlatma gerçekleşir.</p>
+                            <h4>Mantıksal Hata</h4>
+                            <p>Normal koşullarda bir uygulama sağlık verilerini okumak istediğinde <code>PermissionController</code> bir onay penceresi çıkarır. Ancak HealthFitness veri doğrulama yolunda çağrıyı yapan uygulamanın kimliği ve izin durumları eksik doğrulanır.</p>
+                            <h4>Saldırgan Ne Kazanır?</h4>
+                            <ul>
+                                <li><strong>Sessiz Veri Çalma (Zero-Click):</strong> Kullanıcı hiçbir onay ekranı görmez. Arka planda sağlık, aktivite, uyku ve tıbbi kayıt geçmişine erişim sağlanır.</li>
+                                <li><strong>Gizlilik İhlali:</strong> Günlük fiziksel hareketler ve hassas biyometrik veriler toplanabilir.</li>
+                            </ul>
+                            <h4>Yama Mantığı</h4>
+                            <p>API'ye istek atan paketin adı (<code>callingPackage</code>) ve UID/imza bilgileri, veri paylaşımı gerçekleşmeden önce <strong>kesin ve çift yönlü</strong> doğrulamaya tabi tutulur.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 7: IoC -->
+                <div class="accordion-item fade-in" id="acc-ioc">
+                    <button class="accordion-trigger" aria-expanded="false">
+                        <span class="icon-left">🔍</span>
+                        <span class="trigger-text">Siber Dedektiflik: Anormallik Göstergeleri (IoC)</span>
+                        <span class="chevron">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <p>Saldırı zinciri girişimlerini tespit etmek için izlenmesi gereken göstergeler:</p>
+                            <ul>
+                                <li><strong>Sıradışı <code>packages.list</code> Değişiklikleri:</strong> Satır sayısının aniden artması, mükerrer paket isimleri veya beklenmedik <code>\n</code> karakterleri.</li>
+                                <li><strong>Şüpheli Unicode Dosya Yolları:</strong> DocumentsUI üzerinden gelen ve standart normalizasyon formlarına uymayan (fullwidth karakter içeren) URI istekleri.</li>
+                                <li><strong>İzin Talebi Olmayan API Çağrıları:</strong> İzin bildirim ekranı tetiklenmeden <code>HealthFitness</code> servislerine veri akışı başlatan çağrılar.</li>
+                                <li><strong>Çökmeler ve Sinyaller (SIGSEGV / SIGABRT):</strong> <code>run-as</code> veya <code>installd</code> servislerinin istismar denemeleri esnasında oluşturduğu beklenmedik çökme logları.</li>
+                            </ul>
+                            <div class="info-box">
+                                🔍 Bu göstergelerin tamamı <code>detector.py</code> aracımız tarafından izlenmektedir.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== DETECTOR TERMINAL ====== -->
+    <section class="section" id="detector">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-tag">Tespit Motoru</span>
+                <h2 class="section-title">Detector.py — Canlı Simülasyon</h2>
+                <p class="section-desc">
+                    CVE-2024-0044 sömürü imzalarını gerçek zamanlı olarak tespit eden <code>detector.py</code> motorunun canlı çıktısı.
+                </p>
+            </div>
+            <div class="detector-wrapper fade-in">
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="terminal-title">detector.py — src/detector.py</div>
+                    </div>
+                    <div class="terminal-body" id="terminalBody">
+                        <!-- Terminal lines will be injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== RISK MATRIX ====== -->
+    <section class="section" id="risk-matrix">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-tag">Sonuçlar</span>
+                <h2 class="section-title">Risk Dağılım Matrisi</h2>
+                <p class="section-desc">
+                    Analiz edilen Android OS zafiyetlerinin önem seviyelerine göre özet dağılımı.
+                </p>
+            </div>
+            <div class="risk-table-wrapper fade-in">
+                <table class="risk-table">
+                    <thead>
+                        <tr>
+                            <th>Seviye</th>
+                            <th>Tespit</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="risk-indicator">
+                                    <span class="risk-dot risk-dot--critical"></span>
+                                    Kritik (Critical)
+                                </span>
+                            </td>
+                            <td><span class="risk-count" style="color: var(--severity-critical);">1</span></td>
+                            <td><span class="risk-status risk-status--done">İncelenip Raporlandı</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="risk-indicator">
+                                    <span class="risk-dot risk-dot--high"></span>
+                                    Yüksek (High)
+                                </span>
+                            </td>
+                            <td><span class="risk-count" style="color: var(--severity-high);">2</span></td>
+                            <td><span class="risk-status risk-status--done">İncelenip Raporlandı</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="risk-indicator">
+                                    <span class="risk-dot risk-dot--medium"></span>
+                                    Orta (Medium)
+                                </span>
+                            </td>
+                            <td><span class="risk-count" style="color: var(--text-muted);">0</span></td>
+                            <td><span class="risk-status risk-status--none">—</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="risk-indicator">
+                                    <span class="risk-dot risk-dot--low"></span>
+                                    Düşük (Low)
+                                </span>
+                            </td>
+                            <td><span class="risk-count" style="color: var(--text-muted);">0</span></td>
+                            <td><span class="risk-status risk-status--none">—</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Toplam</strong></td>
+                            <td><span class="risk-count" style="color: var(--accent-cyan);">3</span></td>
+                            <td><strong style="color: var(--accent-green);">Tümü Çözümlendi ✓</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== LAB ENVIRONMENT ====== -->
+    <section class="section" id="lab">
+        <div class="container">
+            <div class="section-header fade-in">
+                <span class="section-tag">Laboratuvar</span>
+                <h2 class="section-title">Test Ortamı ve Mimari</h2>
+                <p class="section-desc">
+                    İzole Docker konteynerleri ve Android AVD emülatörü üzerinde kurulan test laboratuvarı.
+                </p>
+            </div>
+            <div class="lab-grid">
+
+                <!-- Architecture -->
+                <div class="lab-card fade-in fade-in-delay-1">
+                    <h3><span class="icon">🏗️</span> Sistem Mimarisi</h3>
+                    <p>Honeypot ortamında saldırı simülasyonu ve tespit akışı.</p>
+                    <div class="arch-diagram">
+                        <div class="arch-node">📱 Saldırgan APK Kurulumu</div>
+                        <div class="arch-arrow">↓</div>
+                        <div class="arch-node">📋 Sistem Logları (Logcat)</div>
+                        <div class="arch-arrow">↓</div>
+                        <div class="arch-node">🐍 Python Detector Servisi</div>
+                        <div class="arch-arrow">↓</div>
+                        <div class="arch-node arch-node--danger">🚨 Tehdit Yakalandı → ALARM</div>
+                        <div class="arch-arrow">↓</div>
+                        <div class="arch-node arch-node--success">📡 NetVanguard Paneline İletim</div>
+                    </div>
+                </div>
+
+                <!-- Lab Setup -->
+                <div class="lab-card fade-in fade-in-delay-2">
+                    <h3><span class="icon">🔧</span> Ortam Kurulumu</h3>
+                    <p>Test ortamının kurulumu ve kullanılan teknolojiler.</p>
+                    <ul class="lab-steps">
+                        <li>
+                            <span class="step-icon">▸</span>
+                            <span>Android Studio üzerinden <strong>AVD</strong> oluşturulur (API 33 — Android 13)</span>
+                        </li>
+                        <li>
+                            <span class="step-icon">▸</span>
+                            <span>ADB bağlantısıyla emülatöre shell erişimi sağlanır</span>
+                        </li>
+                        <li>
+                            <span class="step-icon">▸</span>
+                            <span><code>detector.py</code> logcat akışını dinleyerek anomalileri tespit eder</span>
+                        </li>
+                        <li>
+                            <span class="step-icon">▸</span>
+                            <span>Tüm testler Docker ile izole edilmiş konteyner ortamında çalışır</span>
+                        </li>
+                        <li>
+                            <span class="step-icon">▸</span>
+                            <span>Sonuçlar <strong>NetVanguard</strong> vize modülüne entegre edilir</span>
+                        </li>
+                    </ul>
+                    <div class="tech-badges">
+                        <span class="tech-badge"><span class="tech-dot tech-dot--python"></span> Python 3.x</span>
+                        <span class="tech-badge"><span class="tech-dot tech-dot--android"></span> Android SDK / ADB</span>
+                        <span class="tech-badge"><span class="tech-dot tech-dot--docker"></span> Docker</span>
+                        <span class="tech-badge"><span class="tech-dot tech-dot--flask"></span> Flask</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                🛡️ Android CVE Araştırma Laboratuvarı
+            </div>
+            <p class="footer-text">
+                İstinye Üniversitesi — Bilgi Güvenliği Teknolojisi Programı<br>
+                BGT006 Sızma Testi Dersi • 2025-2026 Bahar Dönemi
+            </p>
+            <p class="footer-text">
+                Baha Furkan Yıldız • Danışman: Keyvan Arasteh
+            </p>
+            <div class="footer-warning">
+                <strong>⚠️ Yasal Uyarı:</strong> Bu proje yalnızca akademik ve eğitim amaçlıdır.
+                Tüm testler kontrollü laboratuvar ortamında, izole edilmiş sanal makineler üzerinde gerçekleştirilmektedir.
+                Gerçek cihazlara veya üçüncü taraf sistemlere yönelik herhangi bir saldırı girişimi yasa dışıdır ve bu projenin kapsamı dışındadır.
+            </div>
+            <p class="footer-text" style="margin-top: 20px; font-size: 0.75rem;">
+                GNU General Public License v3.0 ile lisanslanmıştır.
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -62,6 +62,8 @@ Proje kapsamında geliştirilen `src/detector.py` uç nokta log analiz ajanı, v
 Android-rce-analizi/
 ├── README.md                  # Proje ana belgesi
 ├── ROADMAP.md                 # Proje yol haritası (Faz 0-5)
+├── start_dashboard.bat        # Windows için Web Dashboard baslatici
+├── start_dashboard.sh         # macOS/Linux için Web Dashboard baslatici
 ├── .gitignore                 # Git takip dışı dosyalar
 ├── .env.example               # Ortam değişkenleri şablonu
 ├── Dockerfile                 # Docker yapılandırması
@@ -69,6 +71,10 @@ Android-rce-analizi/
 ├── LICENSE                    # Lisans dosyası
 ├── src/                       # Kaynak kodlar
 │   └── detector.py            # Uç nokta log analiz ajanı
+├── web/                       # Web Dashboard arayuzu
+│   ├── index.html             # Ana dashboard HTML dosyasi
+│   ├── css/style.css          # Arayuz stilleri
+│   └── js/main.js             # Arayuz dinamikleri ve terminal simulatoru
 ├── docs/                      # Dokümantasyon
 │   ├── assets/                # Görseller ve medya dosyaları
 │   ├── modules/               # Modül belgeleri
@@ -103,6 +109,47 @@ docker-compose up -d
 # 4. Python bağımlılıklarını yükleyin (varsa)
 pip install -r requirements.txt
 ```
+
+---
+
+## 🖥️ Web Dashboard Arayüzü
+
+Projeyi klonlayan (git clone) herhangi bir kullanıcı, analiz raporlarını ve terminal simülasyonunu içeren zengin web arayüzünü kendi yerelinde kolayca çalıştırabilir.
+
+### Dashboard Önizleme (Demo)
+![Web Dashboard Demo](docs/assets/dashboard_full_demo.webp)
+
+Arayüzü görüntülemek için aşağıdaki yöntemlerden birini kullanabilirsiniz:
+
+### 1. Otomatik Başlatıcı Scriptler (Önerilen)
+Yerel HTTP sunucusunu arka planda başlatıp arayüzü varsayılan tarayıcınızda otomatik olarak açmak için işletim sisteminize uygun komutu çalıştırın:
+
+* **Windows (PowerShell / CMD):** Proje ana dizinindeki `start_dashboard.bat` dosyasına çift tıklayabilir veya terminalden şu komutla çalıştırabilirsiniz:
+  ```cmd
+  start_dashboard.bat
+  ```
+* **macOS / Linux (Bash):** Terminalden doğrudan başlatmak için (çalıştırma izni gerektirmeden):
+  ```bash
+  bash start_dashboard.sh
+  ```
+  veya dosyaya çalıştırma yetkisi vererek:
+  ```bash
+  chmod +x start_dashboard.sh
+  ./start_dashboard.sh
+  ```
+
+### 2. Çevrimdışı (Sunucusuz) Çalıştırma
+Herhangi bir yerel sunucu kurmadan doğrudan çalıştırmak için:
+1. `web/` dizinine gidin.
+2. `index.html` dosyasına çift tıklayarak tarayıcınızda doğrudan açın.
+
+### 3. Manuel Sunucu ile Başlatma
+Python sunucusunu elle başlatmak isterseniz:
+```bash
+python -m http.server 8080
+```
+Ardından tarayıcınızdan `http://localhost:8080/web/index.html` adresine gidin.
+
 
 ---
 
