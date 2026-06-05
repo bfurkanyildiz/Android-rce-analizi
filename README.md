@@ -41,6 +41,24 @@
 ## 🚀 Proje Özeti ve Kapsamı
 Bu proje, İstinye Üniversitesi Bilgi Güvenliği Teknolojisi programı Sızma Testi (BGT006) dersi final ödevi olarak geliştirilmiştir. Proje kapsamında Android ekosistemini etkileyen 3 farklı güncel zafiyet (CVE-2024-0044, CVE-2024-43093, CVE-2024-23706) derinlemesine incelenmiş, izole lab ortamı kurgulanmış ve siber dedektiflik metodolojisiyle analiz edilmiştir.
 
+### 🎯 Çözdüğü Sorun ve Projenin Amacı
+Geleneksel Android güvenlik analizleri genellikle sadece teorik dokümantasyon veya statik görsellerden ibarettir. Bu proje, **saldırı ve savunma döngüsünü çalışan kodlarla birleştirerek** şu temel sorunları çözer:
+* **Zafiyetlerin Canlı Analizi:** CVE-2024-0044 gibi kritik yetki yükseltme (LPE) açıklarının Android log katmanındaki (logcat) ayak izlerini canlı yakalar.
+* **Red Team & Blue Team Korelasyonu:** Kırmızı takım sömürü aracı (`exploit_sim.py`) ile mavi takım log izleme dedektörünü (`detector.py`) uç uca bağlayarak tam bir saldırı-savunma PoC'si (Proof of Concept) sunar.
+* **Ürünleşmiş Güvenlik Çıktıları:** Tespit edilen alarmları SIEM standartlarına uygun olarak anlık JSON/CSV raporlarına dönüştürür ve merkezi gösterim paneline (Dashboard) besler.
+
+### ⚡ Tek Komutla Çalışan PoC (Saldırı-Tespit Simülasyonu)
+Projeyi klonlayan bir kullanıcının saniyeler içinde çalışıp çıktıyı görebilmesi için **tek komutla çalışan** PoC başlatıcılar eklenmiştir:
+* **Windows (Çift Tıklama veya CLI):** 
+  ```cmd
+  run_poc.bat
+  ```
+* **macOS / Linux (Terminal):**
+  ```bash
+  bash run_poc.sh
+  ```
+*Bu betikler, kırmızı takımın Android Binder/LPE istismar adımlarını çalıştırır, logcat çıktılarını taklit eder ve mavi takım dedektörü (`detector.py`) tarafından alarmların anlık yakalanmasını sağlayarak `reports/detection_results.json` dosyasına yazar.*
+
 ### 📊 Analiz Edilen Zafiyetlerin Özet Tablosu
 
 | CVE Kodu | Zafiyet Türü | CVSSv3 Skoru | Etkilenen Bileşen | Saldırı Vektörü |
@@ -152,21 +170,51 @@ graph TD
 - Docker & Docker Compose
 - ADB (Android Debug Bridge)
 
-### Kurulum
+### Kurulum ve Çalıştırma
+
+#### 1. Adım: Hazırlık
 ```bash
-# 1. Repoyu klonlayın ve klasöre gidin
+# 1. Repoyu klonlayın ve dizine gidin
 git clone https://github.com/bfurkanyildiz/Android-rce-analizi.git
 cd Android-rce-analizi
 
-# 2. Ortam değişkenlerini oluşturun (Ajanın keywords ve adb ayarları buradan beslenir)
+# 2. Ortam değişkenlerini hazırlayın (.env olmadan varsayılan ayarlar kullanılır)
 cp .env.example .env
+```
 
-# 3. Docker kullanarak ajanı çalıştırmak için (İsteğe bağlı - ADB ve Python konteyner içinde hazır gelir)
+#### 2. Adım: Çalıştırma Seçenekleri
+
+##### 🚀 Seçenek A: Tek Tıklamayla PoC Simülasyonu (En Hızlı Yöntem)
+Herhangi bir kurulum veya emülatör ayarı gerekmeden, saldırı ve tespit mekanizmasını uç uca test etmek için:
+* **Windows (Çift Tıklama veya CMD):**
+  ```cmd
+  run_poc.bat
+  ```
+* **macOS / Linux (Terminal):**
+  ```bash
+  bash run_poc.sh
+  ```
+
+##### 🕵️ Seçenek B: Manuel Canlı ADB Modu
+Android Emülatörünüz açıkken gerçek zamanlı logcat yakalamak için:
+```bash
+# Ajanı başlatın (ADB üzerinden canlı logları dinlemeye başlar)
+python src/detector.py
+
+# Ayrı bir terminalden saldırı simülatörünü tetikleyin
+python src/exploit_sim.py
+```
+
+##### 🐳 Seçenek C: Docker ile Konteyner Modu
+Tüm bağımlılıkları izole bir Docker konteynerinde başlatmak için:
+```bash
 docker-compose up -d
+```
 
-# 4. Ajanı yerel olarak çalıştırmak veya test etmek için (Ek kütüphane bağımlılığı yoktur)
-python src/detector.py                 # Canlı log analiz ajanını başlatır
-python -m unittest src/test_detector.py # Otomatik birim testlerini çalıştırır
+#### 3. Adım: Otomatik Testleri Çalıştırma
+Yazılım kalitesi ve CI/CD standartlarını test etmek için:
+```bash
+python -m unittest src/test_detector.py
 ```
 
 ---
@@ -209,11 +257,17 @@ python -m http.server 8080
 ```
 Ardından tarayıcınızdan `http://localhost:8080/web/index.html` adresine gidin.
 
-### 🔄 CI/CD Otomatik Test Süreci
+### 🔄 CI/CD ve Otomatik Güvenlik/Kalite Taramaları
 
-Proje, yazılım kalitesi ve sürekli entegrasyon (CI/CD) standartlarına uygun olarak tasarlanmıştır. GitHub Actions entegrasyonu sayesinde repoya yapılan her push ve pull request işleminde:
-* Kod tabanı otomatik olarak taranır ve sanal ortam kurulur.
-* `src/test_detector.py` birimi çalıştırılarak `detector.py` alarm korelasyon motorunun doğruluğu test edilir.
+Projemiz siber güvenlik standartlarına uygun yazılım mühendisliği (DevSecOps) prensipleriyle yönetilmektedir. Repoya yapılan her push veya pull request işleminde GitHub Actions şu iş akışını (pipeline) çalıştırır:
+1. **Çoklu İşletim Sistemi Desteği (Matrix Build):** Ajanın kodları hem `ubuntu-latest` hem de `windows-latest` sistemlerinde test edilerek platformlar arası uyumluluk doğrulanır.
+2. **Statik Kod Analizi (Linter):** `flake8` aracı ile Python yazım standartları (PEP 8) denetlenir.
+3. **Statik Güvenlik Analizi (Bandit Scan):** `bandit` aracı ile kodda oluşabilecek kritik zafiyet kalıpları otomatik taranır (tüm false-positive durumlar siber güvenlik standartlarında `# nosec` ile işaretlenmiştir).
+4. **Boru Hattı Entegrasyon Testi:** `exploit_sim.py | detector.py` borusu çalıştırılarak uçtan uca sömürü-tespit döngüsü simüle edilir.
+5. **Rapor Çıktısı (Artifacts):** Başarılı çalışan PoC sonucunda üretilen `detection_results.json` otomatik zip dosyası olarak Actions çıktılarına yüklenir.
+
+#### PoC Terminal Çıktısı Önizleme:
+![PoC Terminal Ekran Görüntüsü](docs/assets/detector_test.png)
 
 
 ---
