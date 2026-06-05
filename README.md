@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://istinye.edu.tr">
-    <img src="https://raw.githubusercontent.com/keyvanarasteh/ResearchLab/master/docs/assets/istinye-university-logo.webp" alt="İstinye Üniversitesi" width="180"/>
+    <img src="docs/assets/istinye-university-logo.webp" alt="İstinye Üniversitesi" width="180"/>
   </a>
 
   # CVE Araştırma ve PoC Laboratuvarı — Android Güvenlik Analizi
@@ -39,8 +39,30 @@
 ## 🚀 Proje Özeti ve Kapsamı
 Bu proje, İstinye Üniversitesi Bilgi Güvenliği Teknolojisi programı Sızma Testi (BGT006) dersi final ödevi olarak geliştirilmiştir. Proje kapsamında Android ekosistemini etkileyen 3 farklı güncel zafiyet (CVE-2024-0044, CVE-2024-43093, CVE-2024-23706) derinlemesine incelenmiş, izole lab ortamı kurgulanmış ve siber dedektiflik metodolojisiyle analiz edilmiştir.
 
+### 📊 Analiz Edilen Zafiyetlerin Özet Tablosu
+
+| CVE Kodu | Zafiyet Türü | CVSSv3 Skoru | Etkilenen Bileşen | Saldırı Vektörü |
+| :--- | :--- | :--- | :--- | :--- |
+| **CVE-2024-0044** | Run-as UID Bypass (LPE & RCE) | **8.8 (High)** | Android System Server | Local (ADB / Kötücül Uygulama) |
+| **CVE-2024-43093** | SQLite & DocumentProvider Bypass | **7.8 (High)** | Android SQLite Library | Local (Medya/Dosya Erişimi) |
+| **CVE-2024-23706** | Package Manager Bypass | **7.8 (High)** | Android Package Manager | Local (Uygulama Kurulumu) |
+
 ### 🔌 Vize Modülü (NetVanguard) Entegrasyonu
 Proje kapsamında geliştirilen `src/detector.py` uç nokta log analiz ajanı, vize projesi olarak hayata geçirilen **NetVanguard** merkezi anomali izleme ve alarm paneline entegre edilmiştir. Emülatör üzerinde oluşan kritik zafiyet imzaları ağ üzerinden NetVanguard backend motoruna aktarılarak merkezi izleme (SIEM) mimarisi simüle edilmiştir.
+
+### 🕵️ Log Analiz Ajanı (src/detector.py) Çalışma Mimarisi
+
+Zafiyet tespit ajanı (`src/detector.py`), Android cihaz üzerinde gerçekleştirilen sömürü faaliyetlerini tespit etmek için tasarlanmış hafif (lightweight) bir uç nokta log izleme motorudur.
+
+#### Temel Özellikler ve Çalışma Modları:
+1. **Esnek Log Girdisi (3 Farklı Mod):**
+   * **Canlı ADB Logcat Akışı:** Emülatöre doğrudan `adb connect` komutuyla bağlanarak cihaz loglarını canlı izler.
+   * **Pipeline / Stdin Modu:** `adb logcat | python src/detector.py` mimarisiyle diğer CLI araçlarıyla borulanabilir.
+   * **Dosya Takibi (Tail -f):** Önceden kaydedilmiş log dosyalarını (`.log`) dinamik olarak satır satır izler.
+   * **Fallback (Manuel Girdi):** Sistemde ADB veya log dosyası kurulu değilse, test amaçlı manuel girilen log satırlarını filtreler (Canlı simülasyon modülü).
+2. **Kural Tabanlı İmza Eşleşmesi:**
+   * `.env` dosyasındaki `DETECTION_KEYWORDS` değişkeninden beslenir.
+   * Android Runtime çökmeleri (`SIGSEGV`), paket yükleme hataları (`SIGABRT`) ve çöken güvenli uygulamalar (`Process has died`) gibi kritik sömürü imzalarını yakaladığında anında terminalde ve loglarda `[TEHLIKE - ALARM]` üretir.
 
 ---
 
@@ -83,6 +105,24 @@ Android-rce-analizi/
 ├── honeypot/                  # Honeypot ortam dosyaları
 └── archive/                   # Arşivlenmiş / kullanım dışı dosyalar
 ```
+
+---
+
+## 🔬 Analiz ve Simülasyon Metodolojisi
+
+Proje kapsamında zafiyet analizi ve savunma simülasyonları 4 temel aşamadan oluşan bir siber güvenlik döngüsüyle ele alınmıştır:
+
+```mermaid
+graph TD
+    A["1. Zafiyet Analizi & Statik İnceleme"] --> B["2. İzole Lab Ortamı Kurulumu"]
+    B --> C["3. İstismar Simülasyonu & Dinamik Loglama"]
+    C --> D["4. Korelasyon & Görsel Dashboard"]
+```
+
+1. **Statik ve Teorik Analiz:** AOSP (Android Open Source Project) kaynak kodları incelenerek UID eşleşmeleri, SQLite veritabanı erişim kısıtlamaları ve paket yükleme mekanizmalarındaki mantıksal hatalar belirlenmiştir.
+2. **İzole Laboratuvar Ortamı:** Android emülatörü (API 33-34) ve honeypot yapılandırması Docker konteynerleri ile izole edilmiş bir sızma testi ağına alınmıştır.
+3. **Dinamik Loglama ve Tespit:** Zafiyetler tetiklendiğinde ortaya çıkan çökme ve bypass izleri (`SIGSEGV` vb.) `src/detector.py` zafiyet tespit ajanı tarafından filtre edilerek yakalanmıştır.
+4. **Dashboard Görselleştirme:** Toplanan veriler, yöneticilerin ve analistlerin anlayabileceği risk matrisleri, saldırı zinciri grafikleri ve canlı terminal simülasyonlarıyla zenginleştirilerek `web/` arayüzüne taşınmıştır.
 
 ---
 
