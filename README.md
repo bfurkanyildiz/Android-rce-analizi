@@ -115,8 +115,7 @@ Android-rce-analizi/
 │       ├── cve_2024_43093.md
 │       ├── detector_test_output.md  # Test rapor çıktısı
 │       └── final_rapor.md           # Ders teslim final raporu
-├── honeypot/                  # Honeypot ortam dosyaları
-└── archive/                   # Arşivlenmiş / kullanım dışı dosyalar
+└── honeypot/                  # Honeypot ortam dosyaları (Emülatör kurulum rehberi)
 ```
 
 
