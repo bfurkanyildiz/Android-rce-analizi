@@ -5,6 +5,12 @@ echo "============================================================"
 echo "  Android CVE Analizi - Web Dashboard Yerel Sunucusu"
 echo "============================================================"
 echo ""
+
+# Eski asili kalmis port 8080 surecleri varsa otomatik temizle (Port Cakismalarini Onlemek Icin)
+if command -v lsof >/dev/null 2>&1; then
+    lsof -ti:8080 | xargs kill -9 >/dev/null 2>&1 || true
+fi
+
 echo "[1] Yerel sunucu http://localhost:8080 portunda baslatiliyor..."
 echo "[2] Varsayilan tarayicida arayuz aciliyor..."
 echo ""

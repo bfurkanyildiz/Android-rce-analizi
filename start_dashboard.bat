@@ -5,6 +5,10 @@ echo ============================================================
 echo   Android CVE Analizi - Web Dashboard Yerel Sunucusu
 echo ============================================================
 echo.
+
+:: Eski asili kalmis port 8080 surecleri varsa otomatik temizle (Port Cakismalarini Onlemek Icin)
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8080 ^| findstr LISTENING') do taskkill /f /pid %%a >nul 2>&1
+
 echo [1] Yerel sunucu http://localhost:8080 portunda baslatiliyor...
 echo [2] Varsayilan tarayicida arayuz aciliyor...
 echo.
