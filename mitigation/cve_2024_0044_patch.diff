@@ -1,0 +1,19 @@
+diff --git a/services/core/java/com/android/server/pm/PackageInstallerService.java b/services/core/java/com/android/server/pm/PackageInstallerService.java
+index 7a1a4b9..d92a01d 100644
+--- a/services/core/java/com/android/server/pm/PackageInstallerService.java
++++ b/services/core/java/com/android/server/pm/PackageInstallerService.java
+@@ -450,6 +450,14 @@ public class PackageInstallerService extends IPackageInstaller.Stub {
+             throw new IllegalArgumentException("Params cannot have invalid package name");
+         }
+ 
++        // CVE-2024-0044 logical bypass patch
++        // Prevent package name spoofing or logical injections via newlines or directory traversal
++        if (params.appPackageName != null) {
++            if (params.appPackageName.contains("\n") || params.appPackageName.contains("\r") || params.appPackageName.contains("/")) {
++                throw new SecurityException("App package name contains invalid character sequences (Logical bypass attempt)");
++            }
++        }
++
+         final int callingUid = Binder.getCallingUid();
+         mPermissionManager.enforceCrossUserPermission(callingUid, userId, true, true, "createSession");
+ 

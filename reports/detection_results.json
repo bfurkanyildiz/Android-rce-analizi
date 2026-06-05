@@ -53,5 +53,55 @@
         "timestamp": "2026-06-05 21:11:02",
         "keyword": "SIGSEGV",
         "log_line": "W AndroidRuntime: SIGSEGV in run-as process"
+    },
+    {
+        "timestamp": "2026-06-05 21:29:19",
+        "keyword": "SIGSEGV",
+        "log_line": "W AndroidRuntime: SIGSEGV in run-as process"
+    },
+    {
+        "timestamp": "2026-06-05 21:31:35",
+        "keyword": "SIGSEGV",
+        "log_line": "W AndroidRuntime: SIGSEGV in run-as process"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:10",
+        "keyword": "SIGSEGV",
+        "log_line": "06-05 20:30:15.123  1000  1050 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:10",
+        "keyword": "died",
+        "log_line": "06-05 20:30:15.220  2000  2050 I ActivityManager: Process com.target.bank (pid 8540) has died"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:10",
+        "keyword": "has died",
+        "log_line": "06-05 20:30:15.220  2000  2050 I ActivityManager: Process com.target.bank (pid 8540) has died"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:10",
+        "keyword": "SIGABRT",
+        "log_line": "06-05 20:30:15.250  1000  1000 W libc    : SIGABRT: package installer system crashed during UID mapping check"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:43",
+        "keyword": "SIGSEGV",
+        "log_line": "06-05 20:30:15.123  1000  1050 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:43",
+        "keyword": "died",
+        "log_line": "06-05 20:30:15.220  2000  2050 I ActivityManager: Process com.target.bank (pid 8540) has died"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:43",
+        "keyword": "has died",
+        "log_line": "06-05 20:30:15.220  2000  2050 I ActivityManager: Process com.target.bank (pid 8540) has died"
+    },
+    {
+        "timestamp": "2026-06-05 21:32:43",
+        "keyword": "SIGABRT",
+        "log_line": "06-05 20:30:15.250  1000  1000 W libc    : SIGABRT: package installer system crashed during UID mapping check"
     }
 ]

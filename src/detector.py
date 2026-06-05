@@ -71,6 +71,27 @@ def save_detection_to_json(keyword, log_line):
     except Exception as e:
         print(f"[!] Log yazma hatasi: {e}")
 
+def trigger_active_response(log_line):
+    """Şüpheli aktivite durumunda saldırgan sürecini sonlandırır (Active Mitigation / IPS)."""
+    target_package = "com.attacker.exploit"  # Simüle edilen saldırgan paketi
+    
+    print(f"{YELLOW}{BOLD}[AKTIF SAVUNMA - INTRUSION PREVENTION]{RESET} Şüpheli sömürü faaliyeti tespit edildi!")
+    print(f"[*] Önleyici Tedbir: Saldırgan paket '{target_package}' durduruluyor...")
+    
+    # ADB üzerinden durdurma komutu (Windows/Linux uyumlu)
+    adb_host = os.getenv("ADB_HOST", "127.0.0.1")
+    emulator_port = os.getenv("EMULATOR_PORT", "5555")
+    adb_target = f"{adb_host}:{emulator_port}"
+    
+    kill_cmd = ["adb", "-s", adb_target, "shell", "am", "force-stop", target_package]
+    
+    try:
+        # nosec B603 is used because connection command parameters are strictly predefined lists
+        subprocess.run(kill_cmd, capture_output=True, text=True, timeout=5)  # nosec B603
+        print(f"{GREEN}[BLOKLANDI] '{target_package}' paketi başarıyla sonlandırıldı ve sistem koruma altına alındı.{RESET}\n")
+    except Exception as e:
+        print(f"{RED}[HATA] Aktif savunma eylemi başarısız oldu: {e}{RESET}\n")
+
 def process_log_line(line, keywords):
     """Her log satirini analiz edip alarm durumlarini tespit eder."""
     if not line:
@@ -83,6 +104,10 @@ def process_log_line(line, keywords):
             print(f"{RED}{BOLD}[TEHLIKE - ALARM {timestamp}]{RESET} {kw} tespiti yapildi!")
             print(f"+-- Log Satiri: {YELLOW}{line.strip()}{RESET}\n")
             save_detection_to_json(kw, line)
+            
+            # Aktif Savunma (IPS) Modu tetikleme
+            if os.getenv("ACTIVE_RESPONSE", "false").lower() == "true":
+                trigger_active_response(line)
 
 def main():
     load_env()
