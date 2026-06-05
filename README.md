@@ -84,29 +84,41 @@ Zafiyet tespit ajanı (`src/detector.py`), Android cihaz üzerinde gerçekleşti
 
 ```
 Android-rce-analizi/
+├── .github/
+│   └── workflows/
+│       └── detector_test.yml  # GitHub Actions (CI/CD) Otomatik Test Yapılandırması
 ├── README.md                  # Proje ana belgesi
 ├── ROADMAP.md                 # Proje yol haritası (Faz 0-5)
-├── start_dashboard.bat        # Windows için Web Dashboard baslatici
-├── start_dashboard.sh         # macOS/Linux için Web Dashboard baslatici
+├── start_dashboard.bat        # Windows için Web Dashboard başlatıcı
+├── start_dashboard.sh         # macOS/Linux için Web Dashboard başlatıcı
 ├── .gitignore                 # Git takip dışı dosyalar
 ├── .env.example               # Ortam değişkenleri şablonu
 ├── Dockerfile                 # Docker yapılandırması
 ├── docker-compose.yml         # Çoklu konteyner yapılandırması
 ├── LICENSE                    # Lisans dosyası
 ├── src/                       # Kaynak kodlar
-│   └── detector.py            # Uç nokta log analiz ajanı
-├── web/                       # Web Dashboard arayuzu
-│   ├── index.html             # Ana dashboard HTML dosyasi
-│   ├── css/style.css          # Arayuz stilleri
-│   └── js/main.js             # Arayuz dinamikleri ve terminal simulatoru
+│   ├── detector.py            # Uç nokta log analiz ajanı (Gerçek zamanlı tespit motoru)
+│   └── test_detector.py       # Ajan için yazılmış otomatik birim (unit) testleri
+├── web/                       # Web Dashboard arayüzü
+│   ├── index.html             # Ana dashboard HTML dosyası
+│   ├── css/style.css          # Arayüz stilleri
+│   └── js/main.js             # Arayüz dinamikleri ve terminal simülatörü
 ├── docs/                      # Dokümantasyon
 │   ├── assets/                # Görseller ve medya dosyaları
 │   ├── modules/               # Modül belgeleri
 │   ├── references/            # Referans kaynakları
-│   └── research/              # Araştırma belgeleri
+│   └── research/              # Derinlemesine araştırma belgeleri
+│       ├── 01_zafiyet_analizi.md
+│       ├── 02_teknik_mekanizma.md
+│       ├── 03_saldirgan_perspektifi.md
+│       ├── cve_2024_23706.md
+│       ├── cve_2024_43093.md
+│       ├── detector_test_output.md  # Test rapor çıktısı
+│       └── final_rapor.md           # Ders teslim final raporu
 ├── honeypot/                  # Honeypot ortam dosyaları
 └── archive/                   # Arşivlenmiş / kullanım dışı dosyalar
 ```
+
 
 ---
 
