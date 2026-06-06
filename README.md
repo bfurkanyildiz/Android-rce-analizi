@@ -220,7 +220,7 @@ python -m unittest src/test_detector.py
 Projeyi klonlayan (git clone) herhangi bir kullanıcı, analiz raporlarını ve terminal simülasyonunu içeren zengin web arayüzünü kendi yerelinde kolayca çalıştırabilir.
 
 ### Dashboard Önizleme (Demo)
-[![Web Dashboard Demo](docs/assets/dashboard_full_demo.gif)](docs/assets/live-demo.mp4)
+<video src="docs/assets/live-demo.mp4" width="100%" controls></video>
 
 Arayüzü görüntülemek için aşağıdaki yöntemlerden birini kullanabilirsiniz:
 
