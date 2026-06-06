@@ -7,6 +7,3 @@ __pycache__/
 
 # Node.js
 node_modules/
-
-# Backups
-dashboard_full_demo_backup.gif
